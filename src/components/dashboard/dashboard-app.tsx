@@ -23,24 +23,33 @@ import {
 
 type NavId = "roadmap" | "vault" | "timeline";
 
-/** Seed for the signed-out demo at /demo. Kept here rather than in the DB so the
+/** Seed for the canned tour at /demo. Kept here rather than in the DB so the
  *  demo never touches Supabase — no auth, no rows, no storage. */
 const DEMO_INPUT: PlanInput = {
   email: "alex@example.com", from: "Berlin, Germany", to: "Lisbon, Portugal", visa: "need", when: "3-6",
 };
 
+/** Plan to start from, in place of the canned DEMO_INPUT. Used by the guest
+ *  dashboard to show the visitor's own funnel answers and generated roadmap.
+ *  Read once, when this component first mounts — pass it already hydrated. */
+export interface DashboardSeed {
+  input: PlanInput;
+  tasks: Task[];
+}
+
 export function DashboardApp({
-  userId, email, displayName, pro, demo = false,
+  userId, email, displayName, pro, demo = false, seed,
 }: {
-  userId: string; email: string; displayName: string; pro: boolean; demo?: boolean;
+  userId: string; email: string; displayName: string; pro: boolean;
+  demo?: boolean; seed?: DashboardSeed;
 }) {
   const router = useRouter();
   const supabase = useRef(createClient()).current;
 
   const [loading, setLoading] = useState(!demo);
   const [planId, setPlanId] = useState<string | null>(null);
-  const [input, setInput] = useState<PlanInput>(demo ? DEMO_INPUT : BLANK_INPUT);
-  const [tasks, setTasks] = useState<Task[]>(demo ? DEFAULT_TASKS : []);
+  const [input, setInput] = useState<PlanInput>(seed?.input ?? (demo ? DEMO_INPUT : BLANK_INPUT));
+  const [tasks, setTasks] = useState<Task[]>(seed?.tasks ?? (demo ? DEFAULT_TASKS : []));
   const [docs, setDocs] = useState<WaypointDoc[]>([]);
   const [nav, setNav] = useState<NavId>("roadmap");
 

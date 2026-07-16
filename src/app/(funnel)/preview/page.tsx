@@ -83,7 +83,7 @@ export default function PreviewPage() {
         </div>
 
         <div style={{ display: "flex", justifyContent: "center", marginTop: 36 }}>
-          <Button size="lg" onClick={() => router.push("/app")} style={{ height: 48, padding: "0 28px", fontSize: 16 }}>
+          <Button size="lg" onClick={() => router.push("/guest")} style={{ height: 48, padding: "0 28px", fontSize: 16 }}>
             Open My Dashboard <Icon name="ArrowRight" size={17} />
           </Button>
         </div>

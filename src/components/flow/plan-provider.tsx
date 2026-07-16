@@ -18,6 +18,9 @@ interface FlowState {
 }
 
 interface PlanContextValue extends FlowState {
+  /** False until localStorage has been read; `input`/`tasks` are defaults til then.
+   *  Consumers that seed other state from the flow must wait for this. */
+  hydrated: boolean;
   setInput: React.Dispatch<React.SetStateAction<PlanInput>>;
   setTasks: React.Dispatch<React.SetStateAction<Task[]>>;
   start: (email: string) => void;
@@ -74,7 +77,7 @@ export function PlanProvider({ children }: { children: React.ReactNode }) {
     }
   }, []);
 
-  const value: PlanContextValue = { input, tasks, setInput, setTasks, start, reset };
+  const value: PlanContextValue = { input, tasks, hydrated, setInput, setTasks, start, reset };
   return <PlanContext.Provider value={value}>{children}</PlanContext.Provider>;
 }
 

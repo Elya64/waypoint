@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 import { createClient } from "@/lib/supabase/client";
 import { Brand } from "@/components/brand";
 import { Icon, type IconName } from "@/components/icon";
@@ -13,7 +14,7 @@ import { IconButton, Button } from "@/components/ui/button";
 import { aiComplete } from "@/lib/ai-client";
 import { FLOW_STORE_KEY } from "@/components/flow/plan-provider";
 import {
-  PHASES, BLANK_INPUT, cityOnly, type PlanInput, type Task, type WaypointDoc,
+  PHASES, BLANK_INPUT, DEFAULT_TASKS, cityOnly, type PlanInput, type Task, type WaypointDoc,
 } from "@/lib/waypoint";
 import {
   planRowToInput, taskRowToTask, docRowToDoc,
@@ -22,23 +23,30 @@ import {
 
 type NavId = "roadmap" | "vault" | "timeline";
 
+/** Seed for the signed-out demo at /demo. Kept here rather than in the DB so the
+ *  demo never touches Supabase — no auth, no rows, no storage. */
+const DEMO_INPUT: PlanInput = {
+  email: "alex@example.com", from: "Berlin, Germany", to: "Lisbon, Portugal", visa: "need", when: "3-6",
+};
+
 export function DashboardApp({
-  userId, email, displayName, pro,
+  userId, email, displayName, pro, demo = false,
 }: {
-  userId: string; email: string; displayName: string; pro: boolean;
+  userId: string; email: string; displayName: string; pro: boolean; demo?: boolean;
 }) {
   const router = useRouter();
   const supabase = useRef(createClient()).current;
 
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(!demo);
   const [planId, setPlanId] = useState<string | null>(null);
-  const [input, setInput] = useState<PlanInput>(BLANK_INPUT);
-  const [tasks, setTasks] = useState<Task[]>([]);
+  const [input, setInput] = useState<PlanInput>(demo ? DEMO_INPUT : BLANK_INPUT);
+  const [tasks, setTasks] = useState<Task[]>(demo ? DEFAULT_TASKS : []);
   const [docs, setDocs] = useState<WaypointDoc[]>([]);
   const [nav, setNav] = useState<NavId>("roadmap");
 
   // ---- load or claim the plan ----
   useEffect(() => {
+    if (demo) return;
     let active = true;
     (async () => {
       const { data: plans } = await supabase
@@ -79,17 +87,29 @@ export function DashboardApp({
   const toggleTask = useCallback(async (id: string) => {
     let nextDone = false;
     setTasks((ts) => ts.map((t) => (t.id === id ? ((nextDone = !t.done), { ...t, done: nextDone }) : t)));
+    if (demo) return;
     await supabase.from("tasks").update({ done: nextDone }).eq("id", id);
-  }, [supabase]);
+  }, [supabase, demo]);
 
   const setSub = useCallback(async (id: string, sub: Task["sub"]) => {
     const allDone = sub.length > 0 && sub.every((s) => s.done);
     setTasks((ts) => ts.map((t) => (t.id === id ? { ...t, sub, done: allDone || t.done } : t)));
+    if (demo) return;
     await supabase.from("tasks").update({ sub, ...(allDone ? { done: true } : {}) }).eq("id", id);
-  }, [supabase]);
+  }, [supabase, demo]);
 
   const addDocs = useCallback(async (files: FileList | File[]) => {
     const list = Array.from(files || []);
+    if (demo) {
+      // Show the upload UI working without persisting anything.
+      setDocs((d) => [
+        ...list.map((f, i) => ({
+          id: `demo-${Date.now()}-${i}`, name: f.name, kind: "Proof of action", at: "just now",
+        })),
+        ...d,
+      ]);
+      return;
+    }
     for (const f of list) {
       const path = `${userId}/${Date.now()}-${f.name}`;
       const { error: upErr } = await supabase.storage.from("documents").upload(path, f);
@@ -100,13 +120,13 @@ export function DashboardApp({
         .select("*").single();
       if (data) setDocs((d) => [docRowToDoc(data as DocumentRow), ...d]);
     }
-  }, [supabase, userId, planId]);
+  }, [supabase, userId, planId, demo]);
 
   const restart = useCallback(async () => {
-    if (planId) await supabase.from("plans").update({ active: false }).eq("id", planId);
+    if (!demo && planId) await supabase.from("plans").update({ active: false }).eq("id", planId);
     clearFlow();
     router.push("/onboarding");
-  }, [supabase, planId, router]);
+  }, [supabase, planId, router, demo]);
 
   if (loading) {
     return (
@@ -185,11 +205,17 @@ export function DashboardApp({
           <button onClick={restart} style={footerBtn}>
             <Icon name="RotateCcw" size={15} /> Start a new plan
           </button>
-          <form action="/auth/signout" method="post">
-            <button type="submit" style={{ ...footerBtn, width: "100%" }}>
-              <Icon name="ArrowUp" size={15} style={{ transform: "rotate(45deg)" }} /> Sign out
-            </button>
-          </form>
+          {demo ? (
+            <Link href="/login" style={{ ...footerBtn, textDecoration: "none" }}>
+              <Icon name="ArrowRight" size={15} /> Sign up for your own plan
+            </Link>
+          ) : (
+            <form action="/auth/signout" method="post">
+              <button type="submit" style={{ ...footerBtn, width: "100%" }}>
+                <Icon name="ArrowUp" size={15} style={{ transform: "rotate(45deg)" }} /> Sign out
+              </button>
+            </form>
+          )}
         </div>
       </aside>
 

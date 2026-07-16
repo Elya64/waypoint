@@ -87,6 +87,16 @@ export default function HeroPage() {
             </Button>
           </div>
 
+          <div style={{ marginBottom: 26, marginTop: -12 }}>
+            <Link
+              href="/demo"
+              style={{ fontSize: 14.5, color: "var(--muted-foreground)", textDecoration: "none", display: "inline-flex", alignItems: "center", gap: 6 }}
+            >
+              or <b style={{ color: "var(--ac)", fontWeight: 600 }}>explore a live demo</b>
+              <Icon name="ArrowRight" size={14} color="var(--ac)" />
+            </Link>
+          </div>
+
           {/* social proof */}
           <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
             <span className="av-stack">

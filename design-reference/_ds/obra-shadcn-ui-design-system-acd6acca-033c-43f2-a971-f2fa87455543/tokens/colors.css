@@ -1,0 +1,161 @@
+/* ─────────────────────────────────────────────────────────────────────────
+   COLORS — semantic tokens for the Obra shadcn/ui kit (neutral base theme).
+   Light mode lives on :root; dark mode on .dark / [data-theme="dark"].
+   Values trace back to the raw Tailwind/Figma palette in fig-tokens.css.
+   ───────────────────────────────────────────────────────────────────────── */
+
+:root {
+  /* Neutral ramp (the base palette this theme is built from) */
+  --neutral-50:  rgb(250,250,250);
+  --neutral-100: rgb(245,245,245);
+  --neutral-200: rgb(229,229,229);
+  --neutral-300: rgb(212,212,212);
+  --neutral-400: rgb(163,163,163);
+  --neutral-500: rgb(115,115,115);
+  --neutral-600: rgb(82,82,82);
+  --neutral-700: rgb(64,64,64);
+  --neutral-800: rgb(38,38,38);
+  --neutral-900: rgb(23,23,23);
+  --neutral-950: rgb(10,10,10);
+
+  /* Semantic surface + content tokens */
+  --background: rgb(255,255,255);
+  --foreground: rgb(10,10,10);
+
+  --card: rgb(255,255,255);
+  --card-foreground: rgb(10,10,10);
+
+  --popover: rgb(255,255,255);
+  --popover-foreground: rgb(10,10,10);
+
+  --primary: rgb(23,23,23);
+  --primary-foreground: rgb(250,250,250);
+  --primary-hover: rgb(64,64,64);
+
+  --secondary: rgb(245,245,245);
+  --secondary-foreground: rgb(23,23,23);
+  --secondary-hover: rgb(250,250,250);
+
+  --muted: rgb(245,245,245);
+  --muted-foreground: rgb(115,115,115);
+
+  --accent: rgb(245,245,245);
+  --accent-foreground: rgb(23,23,23);
+
+  --destructive: rgb(220,38,38);
+  --destructive-foreground: rgb(255,255,255);
+  --destructive-subtle: rgb(254,242,242);
+  --destructive-text: rgb(220,38,38);
+  --destructive-border: rgb(239,68,68);
+
+  --border: rgb(229,229,229);
+  --input: rgb(229,229,229);
+  --ring: rgb(163,163,163);
+  --ring-error: rgb(252,165,165);
+
+  /* Ghost / outline interaction overlays (transparent so they layer anywhere) */
+  --ghost-hover: rgba(0,0,0,0.05);
+  --outline-hover: rgba(0,0,0,0.033);
+  --outline-active: rgba(0,0,0,0.05);
+
+  /* Tooltip / inverted popover surface (dark on light theme) */
+  --tooltip: rgb(10,10,10);
+  --tooltip-foreground: rgb(255,255,255);
+
+  /* Sidebar surface set */
+  --sidebar: rgb(250,250,250);
+  --sidebar-foreground: rgb(64,64,64);
+  --sidebar-border: rgb(229,229,229);
+  --sidebar-accent: rgb(245,245,245);
+  --sidebar-accent-foreground: rgb(23,23,23);
+  --sidebar-primary: rgb(23,23,23);
+  --sidebar-primary-foreground: rgb(250,250,250);
+  --sidebar-ring: rgb(212,212,212);
+  --sidebar-muted: rgb(115,115,115);
+
+  /* Status / sentiment */
+  --positive: rgb(0,150,137);
+  --negative: rgb(245,74,0);
+  --warning: rgb(202,138,4);
+  --success: rgb(22,163,74);
+  --info: rgb(37,99,235);
+
+  /* Categorical chart series */
+  --chart-1: rgb(245,74,0);
+  --chart-2: rgb(0,150,137);
+  --chart-3: rgb(16,78,100);
+  --chart-4: rgb(255,185,0);
+  --chart-5: rgb(254,154,0);
+
+  /* Brand accent (the kit's "brand-shades" map to blue) */
+  --brand-50:  rgb(239,246,255);
+  --brand-100: rgb(219,234,254);
+  --brand-200: rgb(191,219,254);
+  --brand-300: rgb(147,197,253);
+  --brand-400: rgb(96,165,250);
+  --brand-500: rgb(59,130,246);
+  --brand-600: rgb(37,99,235);
+  --brand-700: rgb(29,78,216);
+  --brand-800: rgb(30,64,175);
+  --brand-900: rgb(30,58,138);
+}
+
+:root[data-theme="dark"],
+.dark {
+  --background: rgb(10,10,10);
+  --foreground: rgb(250,250,250);
+
+  --card: rgb(23,23,23);
+  --card-foreground: rgb(255,255,255);
+
+  --popover: rgb(23,23,23);
+  --popover-foreground: rgb(250,250,250);
+
+  --primary: rgb(245,245,245);
+  --primary-foreground: rgb(23,23,23);
+  --primary-hover: rgb(212,212,212);
+
+  --secondary: rgb(38,38,38);
+  --secondary-foreground: rgb(245,245,245);
+  --secondary-hover: rgb(23,23,23);
+
+  --muted: rgb(23,23,23);
+  --muted-foreground: rgb(163,163,163);
+
+  --accent: rgb(23,23,23);
+  --accent-foreground: rgb(245,245,245);
+
+  --destructive: rgb(158,64,66);
+  --destructive-foreground: rgb(255,255,255);
+  --destructive-subtle: rgb(69,10,10);
+  --destructive-text: rgb(248,113,113);
+  --destructive-border: rgb(239,68,68);
+
+  --border: rgb(64,64,64);
+  --input: rgba(255,255,255,0.05);
+  --ring: rgb(64,64,64);
+  --ring-error: rgb(109,46,47);
+
+  --ghost-hover: rgba(255,255,255,0.10);
+  --outline-hover: rgba(255,255,255,0.10);
+  --outline-active: rgba(255,255,255,0.15);
+
+  --tooltip: rgb(255,255,255);
+  --tooltip-foreground: rgb(10,10,10);
+
+  --sidebar: rgb(10,10,10);
+  --sidebar-foreground: rgb(212,212,212);
+  --sidebar-border: rgb(38,38,38);
+  --sidebar-accent: rgb(23,23,23);
+  --sidebar-accent-foreground: rgb(245,245,245);
+  --sidebar-primary: rgb(250,250,250);
+  --sidebar-primary-foreground: rgb(23,23,23);
+  --sidebar-ring: rgb(64,64,64);
+  --sidebar-muted: rgb(115,115,115);
+
+  --chart-1: rgb(20,71,230);
+  --chart-2: rgb(0,188,125);
+  --chart-3: rgb(253,154,0);
+  --chart-4: rgb(173,70,255);
+  --chart-5: rgb(255,32,86);
+}

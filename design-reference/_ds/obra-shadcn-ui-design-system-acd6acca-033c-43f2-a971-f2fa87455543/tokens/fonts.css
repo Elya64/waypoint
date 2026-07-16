@@ -1,0 +1,4 @@
+/* Geist + Geist Mono — the kit's real typefaces, served from Google Fonts.
+   Geist is the brand sans (headings + body); Geist Mono is the monospace face.
+   These are NOT substitutions — they are the exact families used in the source file. */
+@import url('https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&family=Geist+Mono:wght@400;500;600&display=swap');

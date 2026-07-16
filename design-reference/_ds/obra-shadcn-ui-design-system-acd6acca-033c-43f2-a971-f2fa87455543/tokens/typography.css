@@ -1,0 +1,44 @@
+/* ─────────────────────────────────────────────────────────────────────────
+   TYPOGRAPHY — Geist sans + Geist Mono. Type scale traced from the kit's
+   Figma "typography" variable collection.
+   ───────────────────────────────────────────────────────────────────────── */
+
+:root {
+  --font-sans: "Geist", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-mono: "Geist Mono", ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+  --font-serif: "Geist", Georgia, "Times New Roman", serif;
+
+  --font-weight-light: 300;
+  --font-weight-normal: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+
+  /* Headings (font-size / line-height / letter-spacing) */
+  --h1-size: 48px;   --h1-line: 48px;     --h1-tracking: -1.5px;  --h1-weight: 600;
+  --h2-size: 30px;   --h2-line: 30px;     --h2-tracking: -1px;    --h2-weight: 600;
+  --h3-size: 24px;   --h3-line: 28.8px;   --h3-tracking: -1px;    --h3-weight: 600;
+  --h4-size: 20px;   --h4-line: 24px;     --h4-tracking: 0px;     --h4-weight: 600;
+
+  /* Paragraph scale */
+  --text-lg-size: 18px;    --text-lg-line: 27px;
+  --text-base-size: 16px;  --text-base-line: 24px;
+  --text-sm-size: 14px;    --text-sm-line: 20px;
+  --text-xs-size: 12px;    --text-xs-line: 16px;
+
+  /* Caption + mono */
+  --caption-size: 14px;   --caption-line: 21px;   --caption-tracking: 1.5px;
+  --mono-size: 16px;      --mono-line: 24px;
+}
+
+/* Specimen / utility classes — opt in by class, never global element resets */
+.ds-h1 { font-family: var(--font-sans); font-size: var(--h1-size); line-height: var(--h1-line); letter-spacing: var(--h1-tracking); font-weight: var(--h1-weight); }
+.ds-h2 { font-family: var(--font-sans); font-size: var(--h2-size); line-height: var(--h2-line); letter-spacing: var(--h2-tracking); font-weight: var(--h2-weight); }
+.ds-h3 { font-family: var(--font-sans); font-size: var(--h3-size); line-height: var(--h3-line); letter-spacing: var(--h3-tracking); font-weight: var(--h3-weight); }
+.ds-h4 { font-family: var(--font-sans); font-size: var(--h4-size); line-height: var(--h4-line); letter-spacing: var(--h4-tracking); font-weight: var(--h4-weight); }
+.ds-lead { font-family: var(--font-sans); font-size: var(--text-lg-size); line-height: var(--text-lg-line); color: var(--muted-foreground); }
+.ds-body { font-family: var(--font-sans); font-size: var(--text-base-size); line-height: var(--text-base-line); }
+.ds-small { font-family: var(--font-sans); font-size: var(--text-sm-size); line-height: var(--text-sm-line); }
+.ds-muted { font-family: var(--font-sans); font-size: var(--text-sm-size); line-height: var(--text-sm-line); color: var(--muted-foreground); }
+.ds-mono { font-family: var(--font-mono); font-size: var(--mono-size); line-height: var(--mono-line); }
+.ds-caption { font-family: var(--font-sans); font-size: var(--caption-size); line-height: var(--caption-line); letter-spacing: var(--caption-tracking); text-transform: uppercase; color: var(--muted-foreground); }

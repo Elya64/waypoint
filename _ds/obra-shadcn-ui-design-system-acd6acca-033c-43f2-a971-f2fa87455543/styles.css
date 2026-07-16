@@ -1,0 +1,17 @@
+/* ═══════════════════════════════════════════════════════════════════════════
+   Obra shadcn/ui kit — global stylesheet entry point.
+   Consumers link THIS file. It is an @import manifest only — no rules here.
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+/* Webfonts */
+@import './tokens/fonts.css';
+
+/* Clean semantic token layer (what the components consume) */
+@import './tokens/colors.css';
+@import './tokens/typography.css';
+@import './tokens/spacing.css';
+@import './tokens/shadows.css';
+
+/* Raw Figma Variable export — full palette, alphas, chart + brand ramps.
+   Kept as a complete reference; semantic tokens above are the public API. */
+@import './tokens/fig-tokens.css';

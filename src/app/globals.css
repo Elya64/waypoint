@@ -1,0 +1,199 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   DESIGN TOKENS — ported from the Obra shadcn/ui kit (design-reference/_ds).
+   Light theme on :root, dark theme on [data-theme="dark"] / .dark.
+   The font families are wired to next/font CSS variables set in layout.tsx.
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+:root {
+  /* Fonts — next/font injects --font-inter / --font-geist-mono */
+  --font-sans: var(--font-inter), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+
+  /* Neutral ramp */
+  --neutral-50: rgb(250,250,250);
+  --neutral-100: rgb(245,245,245);
+  --neutral-200: rgb(229,229,229);
+  --neutral-300: rgb(212,212,212);
+  --neutral-400: rgb(163,163,163);
+  --neutral-500: rgb(115,115,115);
+  --neutral-600: rgb(82,82,82);
+  --neutral-700: rgb(64,64,64);
+  --neutral-800: rgb(38,38,38);
+  --neutral-900: rgb(23,23,23);
+  --neutral-950: rgb(10,10,10);
+
+  /* Semantic surfaces + content */
+  --background: rgb(255,255,255);
+  --foreground: rgb(10,10,10);
+  --card: rgb(255,255,255);
+  --card-foreground: rgb(10,10,10);
+  --popover: rgb(255,255,255);
+  --popover-foreground: rgb(10,10,10);
+  --primary: rgb(23,23,23);
+  --primary-foreground: rgb(250,250,250);
+  --primary-hover: rgb(64,64,64);
+  --secondary: rgb(245,245,245);
+  --secondary-foreground: rgb(23,23,23);
+  --secondary-hover: rgb(250,250,250);
+  --muted: rgb(245,245,245);
+  --muted-foreground: rgb(115,115,115);
+  --accent: rgb(245,245,245);
+  --accent-foreground: rgb(23,23,23);
+  --destructive: rgb(220,38,38);
+  --destructive-foreground: rgb(255,255,255);
+  --border: rgb(229,229,229);
+  --input: rgb(229,229,229);
+  --ring: rgb(163,163,163);
+  --ring-error: rgb(252,165,165);
+  --ghost-hover: rgba(0,0,0,0.05);
+  --outline-hover: rgba(0,0,0,0.033);
+
+  /* Sidebar surface set */
+  --sidebar: rgb(250,250,250);
+  --sidebar-foreground: rgb(64,64,64);
+  --sidebar-border: rgb(229,229,229);
+  --sidebar-accent: rgb(245,245,245);
+  --sidebar-accent-foreground: rgb(23,23,23);
+  --sidebar-muted: rgb(115,115,115);
+
+  /* Status / sentiment */
+  --positive: rgb(0,150,137);
+  --negative: rgb(245,74,0);
+  --warning: rgb(202,138,4);
+  --success: rgb(22,163,74);
+  --info: rgb(37,99,235);
+
+  /* Brand accent (trust blue) */
+  --brand-50: rgb(239,246,255);
+  --brand-100: rgb(219,234,254);
+  --brand-200: rgb(191,219,254);
+  --brand-300: rgb(147,197,253);
+  --brand-400: rgb(96,165,250);
+  --brand-500: rgb(59,130,246);
+  --brand-600: rgb(37,99,235);
+  --brand-700: rgb(29,78,216);
+  --brand-800: rgb(30,64,175);
+  --brand-900: rgb(30,58,138);
+
+  --ac: var(--brand-600);
+  --ac-soft: var(--brand-50);
+  --ac-border: var(--brand-200);
+
+  /* Radius */
+  --radius-md: 6px;
+  --radius-lg: 8px;
+  --radius-full: 9999px;
+
+  /* Shadows */
+  --shadow-sm: 0 1px 3px 0 rgba(0,0,0,0.10), 0 1px 2px -1px rgba(0,0,0,0.10);
+  --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.10), 0 2px 4px -2px rgba(0,0,0,0.10);
+  --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.10), 0 4px 6px -4px rgba(0,0,0,0.10);
+  --shadow-xl: 0 20px 25px -5px rgba(0,0,0,0.10), 0 8px 10px -6px rgba(0,0,0,0.10);
+}
+
+:root[data-theme="dark"],
+.dark {
+  --background: rgb(10,10,10);
+  --foreground: rgb(250,250,250);
+  --card: rgb(23,23,23);
+  --card-foreground: rgb(255,255,255);
+  --popover: rgb(23,23,23);
+  --popover-foreground: rgb(250,250,250);
+  --primary: rgb(245,245,245);
+  --primary-foreground: rgb(23,23,23);
+  --primary-hover: rgb(212,212,212);
+  --secondary: rgb(38,38,38);
+  --secondary-foreground: rgb(245,245,245);
+  --muted: rgb(23,23,23);
+  --muted-foreground: rgb(163,163,163);
+  --accent: rgb(23,23,23);
+  --accent-foreground: rgb(245,245,245);
+  --border: rgb(64,64,64);
+  --input: rgba(255,255,255,0.05);
+  --ring: rgb(64,64,64);
+  --ghost-hover: rgba(255,255,255,0.10);
+  --sidebar: rgb(10,10,10);
+  --sidebar-foreground: rgb(212,212,212);
+  --sidebar-border: rgb(38,38,38);
+  --sidebar-accent: rgb(23,23,23);
+  --sidebar-accent-foreground: rgb(245,245,245);
+  --sidebar-muted: rgb(115,115,115);
+  --ac-soft: color-mix(in srgb, var(--brand-600) 16%, transparent);
+  --ac-border: color-mix(in srgb, var(--brand-600) 40%, transparent);
+}
+
+/* ─────────────────────────── base ─────────────────────────── */
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+body {
+  font-family: var(--font-sans);
+  color: var(--foreground);
+  background: var(--background);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-thumb { background: var(--neutral-200); border-radius: 6px; border: 3px solid var(--background); }
+::-webkit-scrollbar-thumb:hover { background: var(--neutral-300); }
+input::placeholder, textarea::placeholder { color: var(--muted-foreground); }
+
+/* ─────────────────────────── layout surfaces ─────────────────────────── */
+.surface {
+  min-height: 100vh;
+  background:
+    radial-gradient(120% 80% at 50% -10%, rgba(37,99,235,.05), rgba(37,99,235,0) 55%),
+    var(--background);
+}
+
+.nav {
+  height: 64px; display: flex; align-items: center; justify-content: space-between;
+  padding: 0 32px; border-bottom: 1px solid var(--border);
+  position: sticky; top: 0; background: color-mix(in srgb, var(--background) 80%, transparent);
+  backdrop-filter: blur(8px); z-index: 20;
+}
+.brand { display: inline-flex; align-items: center; gap: 9px; font-weight: 600; font-size: 16px; letter-spacing: -.02em; }
+.brand-mark { display: grid; place-items: center; background: var(--primary); color: var(--primary-foreground); }
+.nav-link { color: var(--muted-foreground); text-decoration: none; font-size: 14px; font-weight: 500; transition: color .15s ease; }
+.nav-link:hover { color: var(--foreground); }
+
+@media (max-width: 860px) {
+  .nav-links { display: none !important; }
+  .hero-grid { grid-template-columns: 1fr !important; gap: 48px !important; padding: 44px 24px 72px !important; }
+}
+@media (max-width: 960px) {
+  .dash-grid { grid-template-columns: 1fr !important; }
+  .dash-sidebar { position: static !important; height: auto !important; }
+}
+
+/* ─────────────────────────── editorial headlines ─────────────────────────── */
+/* Headings use the sans (Inter) at semibold — per user choice, replacing the
+   original Newsreader serif. Accent words (.it) stay italic for emphasis. */
+.editorial {
+  font-family: var(--font-heading, var(--font-sans));
+  font-weight: 600;
+  letter-spacing: -.3px;
+}
+.editorial .it { font-style: italic; font-weight: 600; }
+
+/* ─────────────────────────── social proof / carousel ─────────────────────────── */
+.av-stack { display: inline-flex; align-items: center; }
+.av-stack .av {
+  width: 30px; height: 30px; border-radius: 999px; border: 2px solid var(--background);
+  display: grid; place-items: center; font-size: 11.5px; font-weight: 600;
+  margin-left: -9px; box-shadow: 0 1px 2px rgba(0,0,0,.08);
+}
+.av-stack .av:first-child { margin-left: 0; }
+.dots { display: flex; align-items: center; justify-content: center; gap: 7px; }
+.dots span { width: 6px; height: 6px; border-radius: 999px; background: var(--neutral-300); transition: all .2s ease; }
+.dots span.on { width: 22px; background: var(--neutral-500); }
+
+.lucide { display: inline-block; vertical-align: middle; flex: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: .001ms !important; animation-iteration-count: 1 !important; }
+}

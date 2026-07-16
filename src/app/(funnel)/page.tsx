@@ -20,7 +20,7 @@ export default function HeroPage() {
   };
 
   return (
-    <div className="surface animate-screenIn">
+    <div className="hero-surface animate-screenIn">
       <nav className="nav">
         <div style={{ display: "flex", alignItems: "center", gap: 18 }}>
           <Brand />
@@ -45,7 +45,7 @@ export default function HeroPage() {
         }}
       >
         {/* left: copy */}
-        <div>
+        <div className="hero-copy">
           <div
             style={{
               display: "inline-flex", alignItems: "center", gap: 8, padding: "7px 15px 7px 12px",
@@ -72,6 +72,7 @@ export default function HeroPage() {
           <div style={{ display: "flex", gap: 12, maxWidth: 480, marginBottom: 26, flexWrap: "wrap" }}>
             <input
               type="email"
+              className="field"
               placeholder="Enter your email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
@@ -115,42 +116,44 @@ export default function HeroPage() {
         <div style={{ position: "relative" }}>
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
-            src="https://images.unsplash.com/photo-1502920917128-1aa500764cbd?auto=format&fit=crop&w=1200&q=80"
-            alt="Arriving in a new city"
+            className="hero-shot"
+            src="https://images.unsplash.com/photo-1681118143075-5f5a10c9c092?auto=format&fit=crop&w=1200&q=80"
+            alt="A traveler looking out over a new city"
             style={{
               display: "block", width: "100%", height: 500, objectFit: "cover",
-              borderRadius: 22, boxShadow: "var(--shadow-lg)",
+              borderRadius: 22, boxShadow: "var(--shadow-lg)", border: "1px solid var(--border)",
             }}
           />
 
-          {/* floating "next step" card */}
-          <div
-            style={{
-              position: "absolute", left: -26, bottom: 64, width: 268,
-              background: "var(--card)", borderRadius: 18, padding: "16px 18px",
-              boxShadow: "0 18px 48px -12px rgba(0,0,0,.28)", border: "1px solid var(--border)",
-              animation: "popIn .5s .25s both",
-            }}
-          >
-            <div style={{ fontSize: 11.5, fontWeight: 600, letterSpacing: ".08em", textTransform: "uppercase", color: "var(--muted-foreground)", marginBottom: 12 }}>
-              Your next step
-            </div>
-            <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 14 }}>
-              <IconTile icon="Stamp" tone="var(--ac)" size={42} r={12} />
-              <div style={{ minWidth: 0 }}>
-                <div style={{ fontWeight: 600, fontSize: 14.5, lineHeight: 1.25 }}>Book consulate appointment</div>
-                <div style={{ fontSize: 12.5, color: "var(--muted-foreground)" }}>Phase 1 · Visa &amp; Legal</div>
-              </div>
-            </div>
-            <button
+          {/* floating "next step" card — wrapper animates in, inner lifts on hover */}
+          <div style={{ position: "absolute", left: -26, bottom: 64, width: 268, animation: "popIn .5s .25s both" }}>
+            <div
+              className="hero-card"
               style={{
-                width: "100%", height: 38, cursor: "pointer", border: "none", borderRadius: 10,
-                background: "var(--primary)", color: "var(--primary-foreground)", fontFamily: "var(--font-sans)",
-                fontSize: 13.5, fontWeight: 600, display: "inline-flex", alignItems: "center", justifyContent: "center", gap: 7,
+                background: "var(--card)", borderRadius: 18, padding: "16px 18px",
+                boxShadow: "0 18px 48px -12px rgba(0,0,0,.28)", border: "1px solid var(--border)",
               }}
             >
-              Mark done <Icon name="Check" size={15} />
-            </button>
+              <div style={{ fontSize: 11.5, fontWeight: 600, letterSpacing: ".08em", textTransform: "uppercase", color: "var(--muted-foreground)", marginBottom: 12 }}>
+                Your next step
+              </div>
+              <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 14 }}>
+                <IconTile icon="Stamp" tone="var(--ac)" size={42} r={12} />
+                <div style={{ minWidth: 0 }}>
+                  <div style={{ fontWeight: 600, fontSize: 14.5, lineHeight: 1.25 }}>Book consulate appointment</div>
+                  <div style={{ fontSize: 12.5, color: "var(--muted-foreground)" }}>Phase 1 · Visa &amp; Legal</div>
+                </div>
+              </div>
+              <button
+                style={{
+                  width: "100%", height: 38, cursor: "pointer", border: "none", borderRadius: 10,
+                  background: "var(--primary)", color: "var(--primary-foreground)", fontFamily: "var(--font-sans)",
+                  fontSize: 13.5, fontWeight: 600, display: "inline-flex", alignItems: "center", justifyContent: "center", gap: 7,
+                }}
+              >
+                Mark done <Icon name="Check" size={15} />
+              </button>
+            </div>
           </div>
 
           <div className="dots" style={{ marginTop: 22 }}>

@@ -36,22 +36,19 @@ const config: Config = {
         "ac-border": "var(--ac-border)",
       },
       fontFamily: {
-        sans: ["var(--font-inter)", "system-ui", "sans-serif"],
+        sans: ["var(--font-geist)", "system-ui", "sans-serif"],
         mono: ["var(--font-geist-mono)", "monospace"],
-        editorial: ["var(--font-inter)", "system-ui", "sans-serif"],
+        editorial: ["var(--font-geist)", "system-ui", "sans-serif"],
       },
       borderRadius: {
         md: "var(--radius-md)",
         lg: "var(--radius-lg)",
         full: "var(--radius-full)",
       },
-      keyframes: {
-        screenIn: { from: { transform: "translateY(10px)" }, to: { transform: "translateY(0)" } },
-        fadeUp: { from: { opacity: "0", transform: "translateY(10px)" }, to: { opacity: "1", transform: "translateY(0)" } },
-        popIn: { from: { opacity: "0", transform: "scale(.96)" }, to: { opacity: "1", transform: "scale(1)" } },
-        drift: { "0%,100%": { transform: "translateY(0)" }, "50%": { transform: "translateY(-6px)" } },
-        spin: { to: { transform: "rotate(360deg)" } },
-      },
+      // The @keyframes themselves live in globals.css — Tailwind purges any it
+      // cannot see an `animate-*` utility for, and most callers animate via
+      // inline `animation:` (for per-item delays). These entries only generate
+      // the `animate-*` utility classes; they resolve against globals.css.
       animation: {
         screenIn: "screenIn .42s cubic-bezier(.2,.7,.2,1) both",
         fadeUp: "fadeUp .5s both",

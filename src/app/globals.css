@@ -9,8 +9,8 @@
    ═══════════════════════════════════════════════════════════════════════════ */
 
 :root {
-  /* Fonts — next/font injects --font-inter / --font-geist-mono */
-  --font-sans: var(--font-inter), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  /* Fonts — next/font injects --font-geist / --font-geist-mono */
+  --font-sans: var(--font-geist), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   --font-mono: var(--font-geist-mono), ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
 
   /* Neutral ramp */
@@ -83,6 +83,9 @@
   --ac-soft: var(--brand-50);
   --ac-border: var(--brand-200);
 
+  /* Hairline rule for the landing's background grid */
+  --grid-line: rgba(0,0,0,.045);
+
   /* Radius */
   --radius-md: 6px;
   --radius-lg: 8px;
@@ -124,6 +127,7 @@
   --sidebar-muted: rgb(115,115,115);
   --ac-soft: color-mix(in srgb, var(--brand-600) 16%, transparent);
   --ac-border: color-mix(in srgb, var(--brand-600) 40%, transparent);
+  --grid-line: rgba(255,255,255,.055);
 }
 
 /* ─────────────────────────── base ─────────────────────────── */
@@ -150,6 +154,71 @@ input::placeholder, textarea::placeholder { color: var(--muted-foreground); }
     var(--background);
 }
 
+/* Landing-only treatment: a hairline grid under a soft accent glow. Scoped to
+   the hero so the funnel screens keep the plainer .surface. Both layers ride on
+   z-index:-1 pseudo-elements, kept in-element by `isolation` — deliberately not
+   clipped with overflow:hidden, which would break the sticky nav. */
+.hero-surface {
+  position: relative;
+  isolation: isolate;
+  min-height: 100vh;
+  background: var(--background);
+}
+.hero-surface::before,
+.hero-surface::after {
+  content: ""; position: absolute; z-index: -1; pointer-events: none;
+}
+.hero-surface::before {
+  inset: 0;
+  background-image:
+    linear-gradient(to right, var(--grid-line) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--grid-line) 1px, transparent 1px);
+  background-size: 56px 56px;
+  -webkit-mask-image: radial-gradient(115% 65% at 50% 0%, #000 32%, transparent 76%);
+  mask-image: radial-gradient(115% 65% at 50% 0%, #000 32%, transparent 76%);
+}
+.hero-surface::after {
+  top: -200px; left: 50%; transform: translateX(-50%);
+  width: min(1080px, 130%); height: 560px; border-radius: 999px;
+  background: radial-gradient(50% 50% at 50% 50%, color-mix(in srgb, var(--ac) 13%, transparent), transparent 70%);
+  filter: blur(28px);
+}
+
+/* Staggered entrance for the hero's left column. */
+.hero-copy > * { animation: fadeUp .5s both; }
+.hero-copy > *:nth-child(1) { animation-delay: .04s; }
+.hero-copy > *:nth-child(2) { animation-delay: .10s; }
+.hero-copy > *:nth-child(3) { animation-delay: .16s; }
+.hero-copy > *:nth-child(4) { animation-delay: .22s; }
+.hero-copy > *:nth-child(5) { animation-delay: .28s; }
+.hero-copy > *:nth-child(6) { animation-delay: .34s; }
+
+/* Text inputs: .field carries the focus ring the bare <input> was missing. */
+.field {
+  transition: border-color .15s ease, box-shadow .15s ease, background-color .15s ease;
+}
+.field:focus {
+  border-color: var(--ac);
+  background: var(--background);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--ac) 16%, transparent);
+}
+
+/* The hero's floating "next step" card. The lift lives here, on the inner
+   element — its wrapper owns the popIn animation, and an animation with
+   fill-mode `both` would otherwise out-rank this transform and cancel it. */
+.hero-card {
+  transition: transform .25s cubic-bezier(.2,.7,.2,1), box-shadow .25s ease;
+}
+.hero-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 26px 60px -14px rgba(0,0,0,.34);
+}
+
+.hero-shot {
+  transition: transform .4s cubic-bezier(.2,.7,.2,1);
+}
+.hero-shot:hover { transform: scale(1.008); }
+
 .nav {
   height: 64px; display: flex; align-items: center; justify-content: space-between;
   padding: 0 32px; border-bottom: 1px solid var(--border);
@@ -171,8 +240,11 @@ input::placeholder, textarea::placeholder { color: var(--muted-foreground); }
 }
 
 /* ─────────────────────────── editorial headlines ─────────────────────────── */
-/* Headings use the sans (Inter) at semibold — per user choice, replacing the
-   original Newsreader serif. Accent words (.it) stay italic for emphasis. */
+/* Headings use the sans (Geist) at semibold — per user choice, replacing the
+   Newsreader serif that design-reference/README.md specifies. Reaffirmed
+   2026-07-16: sans headlines are the intended look, so the spec's serif rule is
+   knowingly not followed. Accent words (.it) stay italic for emphasis.
+   Set --font-heading to reintroduce a display face without touching callers. */
 .editorial {
   font-family: var(--font-heading, var(--font-sans));
   font-weight: 600;
@@ -193,6 +265,19 @@ input::placeholder, textarea::placeholder { color: var(--muted-foreground); }
 .dots span.on { width: 22px; background: var(--neutral-500); }
 
 .lucide { display: inline-block; vertical-align: middle; flex: none; }
+
+/* ─────────────────────────── keyframes ─────────────────────────── */
+/* Declared here rather than in tailwind.config.ts on purpose. Tailwind only
+   emits a @keyframes block when a matching `animate-*` utility survives the
+   content scan — but most callers set `animation:` inline (needed for per-item
+   animationDelay), which the scanner cannot see. Config-side keyframes were
+   therefore dropped for everything except screenIn, silently killing popIn,
+   fadeUp, drift and spin (spinners included). globals.css is never purged. */
+@keyframes screenIn { from { transform: translateY(10px); } to { transform: translateY(0); } }
+@keyframes fadeUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes popIn { from { opacity: 0; transform: scale(.96); } to { opacity: 1; transform: scale(1); } }
+@keyframes drift { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
+@keyframes spin { to { transform: rotate(360deg); } }
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: .001ms !important; animation-iteration-count: 1 !important; }

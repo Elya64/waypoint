@@ -34,3 +34,9 @@ yarn-error.log*
 # editor
 .idea
 .vscode
+
+# Claude Code local state (per-machine permission allowlist)
+.claude/settings.local.json
+
+# one-off local design reference dump (Pixso HTML export, not app source)
+/main screen/

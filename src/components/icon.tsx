@@ -3,7 +3,7 @@ import {
   CheckCircle2, Circle, CircleDot, MapPin, Plane, CalendarClock, CalendarDays, Calendar,
   CalendarRange, ShieldCheck, Clock, UploadCloud, FolderLock, FolderOpen, Map,
   GanttChartSquare, RotateCcw, Network, Paperclip, Lock, Loader, FileText, FileSearch,
-  BadgeCheck, Globe, Zap, type LucideProps,
+  BadgeCheck, Globe, Zap, GraduationCap, Laptop, Users, Palmtree, Quote, type LucideProps,
 } from "lucide-react";
 
 /** Curated Lucide registry — only the icons the Waypoint UI uses. */
@@ -12,7 +12,7 @@ const REGISTRY = {
   CheckCircle2, Circle, CircleDot, MapPin, Plane, CalendarClock, CalendarDays, Calendar,
   CalendarRange, ShieldCheck, Clock, UploadCloud, FolderLock, FolderOpen, Map,
   GanttChartSquare, RotateCcw, Network, Paperclip, Lock, Loader, FileText, FileSearch,
-  BadgeCheck, Globe, Zap,
+  BadgeCheck, Globe, Zap, GraduationCap, Laptop, Users, Palmtree, Quote,
 } as const;
 
 export type IconName = keyof typeof REGISTRY;
